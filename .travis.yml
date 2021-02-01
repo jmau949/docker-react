@@ -7,4 +7,16 @@ before_install:
   - docker build -t jmau949/docker-react -f Dockerfile.dev .
 
 script:
-  - docker run -e CI=true jamu949/docker-react npm run test
+  - docker run -e CI=true jmau949/docker-react npm run test
+
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-2"
+  app: "docker-react"
+  env: "dockerreact-env"
+  bucket_name: ""
+  bucket_path: "docker-react"
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
